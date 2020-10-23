@@ -1,0 +1,118 @@
+.sidebar-show {
+    left: 0;
+    bottom: 0;
+    top: 0;
+    position: fixed;
+    color: #fff;
+    z-index: 1;
+    background-color: #07abcc;
+    margin-top: 100px;
+    width: 250px;
+    padding: 0 15px;
+    overflow-y: auto;
+    transition: all 200ms ease-in;
+}
+
+.sidebar-show > .sidebar__navigation-items {
+    padding: 0;
+}
+
+.active {
+    background-color: #0a69aa;
+}
+
+.sidebar-show > .sidebar__navigation-items > li {
+    display: flex;
+    cursor: pointer;
+    list-style-type: none;
+    border-radius: 4px;
+    margin: 20px 0;
+    transition: background-color 200ms ease-in;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #343434;
+}
+
+
+.sidebar-show > .sidebar__navigation-items > li:last-child {
+    border-bottom: none;
+}
+
+.sidebar-show > .sidebar__navigation-items > li:hover {
+    background-color: #0a69aa;
+}
+
+.sidebar-show > .sidebar__navigation-items > li > img {
+    width: 35px;
+    height: 35px;
+    color: #FFFFFF
+}
+
+.sidebar-show > .sidebar__navigation-items >li > img:last-child {
+    color: #fff;
+    margin-top: 6px;
+    margin-left: 5px;
+}
+
+.sidebar-show > .sidebar__navigation-items > li > p {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+.sidebar-show .sidebar-show__logout-btn {
+    margin-left: 30px;
+    display: fixed;
+}
+
+.sidebar__logout-btn {
+    font-size: 18px;
+    background-color: #0a69aa;
+    padding: 0 65px 0 65px;
+}
+
+.sidebar__logout-btn:hover {
+    background-color: #08568a;
+}
+
+.logout-confirm-modal {
+    padding: 15px;
+}
+
+.logout-confirm-modal__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px
+}
+
+.logout-confirm-modal-label {
+    color: black;
+    font-size: 20px;
+}
+
+.logout-confirm-modal__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logout-modal-no-btn {
+    margin-left: 35px;
+    width: 180px;
+    background-color: #A0A0A0;
+}
+
+.logout-modal-no-btn:hover {
+    background-color: #969090;
+}
+
+.logout-modal-yes-btn {
+    margin-right: 35px;
+    width: 180px;
+    background-color: #343434
+}
+
+.logout-modal-yes-btn:hover {
+    background-color: #2b2a2a;
+}

@@ -1,0 +1,40 @@
+.bid-table__item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-weight: 500;
+    font-size: 18px;
+    padding: 15px 0;
+    border-bottom: 3px solid #A0A0A0
+}
+
+.bid-table__item .item__product {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.bid-table__item .item__amount {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 2;
+    justify-content: center;
+    align-items: center;
+}
+
+.bid-table__item .item__status {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 3;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.bid-table__item:last-child {
+    border-bottom: none;
+}

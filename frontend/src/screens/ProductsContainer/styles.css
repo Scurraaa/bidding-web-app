@@ -1,0 +1,130 @@
+.top-section-products {
+    display: flex;
+    margin: 0
+}
+
+.add-product-btn {
+    margin-top: 10px;
+    margin-left: auto;
+    width: 150px;
+}
+
+.mid-section-products {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.product-search-status {
+    width: 180px;
+    margin-top: 20px;
+    color: black
+}
+
+.product-search-status-dropdown {
+    width: 440px;
+}
+
+.search-btn {
+    margin-left: 15px;
+    width: 100px;
+}
+
+.table-section-products {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0px;
+    min-width: 580px;
+}
+
+.table-section-products__header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) 2fr;
+    font-size: 20px;
+    padding: 15px 0;
+    border-bottom: 6px solid #A0A0A0
+}
+
+.table-section-products__header .table-section-products_header-name,
+.table-section-products__header-description,
+.table-section-products__header-expiry-date,
+.table-section-products__header-status,
+.table-section-products__header-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-table-not-found-data {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.product-table-not-found-data .product-table-not-found-label {
+    color: #07abcc;
+    font-size: 35px;
+}
+
+.add-product-modal {
+    padding: 20px;
+    width: 700px;
+}
+
+.add-product-modal__header {
+    display: flex;
+    justify-content: center;
+}
+
+.add-product-modal__header-title {
+    font-size: 30px;
+}
+
+.add-product-modal__body-inline-1, .add-product-modal__body-inline-2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-product-modal__body-inline-1-name, .add-product-modal__body-inline-1-expiry-date {
+    width: 340px;
+}
+
+.add-product-modal__body-inline-2-minimum-bid, .add-product-modal__body-inline-2-maximum-bid {
+    width: 340px;
+}
+
+.add-product-modal__footer {
+    display:flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.add-product-cancel-btn {
+    margin-left: 60px;
+    width: 210px;
+    background-color: #A0A0A0;
+}
+
+.add-product-cancel-btn:hover {
+    background-color: #919191
+}
+
+.add-product-save-btn {
+    margin-right: 60px;
+    width: 210px;
+}
+
+.file-upload-container {
+    display: flex;
+    justify-content: center;
+}
+
+.add-modal-upload-image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.file-preview {
+    width: 600px;
+    height: 450px;
+}

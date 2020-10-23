@@ -1,0 +1,36 @@
+.top-section-user-info {
+    margin-bottom: 20px;
+}
+
+.main-section-user-info {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0px;
+    min-width: 580px;
+}
+
+.main-section-user-info__inline-1 {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 25px;
+    border-bottom: 3px solid black;
+    margin-bottom: 25px;
+}
+
+.main-section-user-info__inline-2 {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.user-type {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: black
+}
+
+.user-info {
+    color: black;
+    font-size: 24px;
+}

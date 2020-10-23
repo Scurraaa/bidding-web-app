@@ -1,0 +1,53 @@
+.file-input {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    white-space: nowrap;
+    width: 1px;
+  }
+  
+  .js .file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+  
+  .file-input + label {
+    background-color:transparent;
+    border-radius: 4rem;
+    color:black;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Hind', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 50px;
+    padding: 0px 25px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .file-input + label:hover {
+      text-decoration: underline;
+
+  }
+  
+  
+  .file-input:focus + label {
+    outline: none;
+  }
+  
+  .file-input + label .file-input-btn {
+    background-color: #3a3f3a;
+    border-radius: 50px;
+    overflow: hidden;
+  }
+  
+  
+  

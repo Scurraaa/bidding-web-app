@@ -1,0 +1,54 @@
+.mid-section-bid {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.bid-search-status {
+    width: 150px;
+    margin-top: 20px;
+    color: black
+}
+
+.bid-search-status-dropdown {
+    width: 450px;
+}
+
+.search-btn {
+    margin-left: 15px;
+    width: 100px;
+}
+
+.table-section-bid {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0px;
+    min-width: 580px;
+}
+
+.table-section-bid .table-section-bid__header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 20px;
+    padding: 15px 0;
+    border-bottom: 6px solid #A0A0A0
+}
+
+.table-section-bid__header .table-section-bid__header-product,
+.table-section-bid__header-amount,
+.table-section-bid__header-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bid-table-not-found-data {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.bid-table-not-found-data .bid-table-not-found-label {
+    color: #07abcc;
+    font-size: 35px;
+}
