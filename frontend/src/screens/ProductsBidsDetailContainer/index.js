@@ -18,6 +18,7 @@ import Modal from '../../components/Modal'
 
 const mapStateToProps = state => {
     return {
+        authentication: state.authentication.credentials,
         token: state.authentication.credentials.token,
         user_id: state.authentication.credentials.id,
         bids: state.bids,
@@ -104,6 +105,7 @@ class ProductBidDetails extends PureComponent {
     }
 
     render() {
+        console.log(this.props.authentication.user_type)
         return this.props.products.isLoading ? (
             <PageLoading/>
         ) :this.props.products.errMess === 'HTTP status === 500' ? (
@@ -121,7 +123,7 @@ class ProductBidDetails extends PureComponent {
                 )}
                 <div className='top-section-product-details'>
                     <h2 className='content-title'>{this.state.form.name}</h2>
-                    {this.props.products.product.user !== this.props.user_id ? (
+                    {this.props.products.product.user !== this.props.user_id && this.props.authentication.user_type !== 'seller' ? (
                     <Button
                         className='place-bid-btn'
                         label='PLACE BID'
@@ -195,7 +197,7 @@ class ProductBidDetails extends PureComponent {
                                 </>
                             )}
                         </div>
-                    ) :this.props.products.product.user !== this.props.user_id ? (
+                    ) :this.props.products.product.user !== this.props.user_id && this.props.authentication.user_type !== 'seller' ? (
                         <div className='buyer-bids'>
                             <div className='buyer-bids-container'>
                                 <h2>YOUR BIDS IN THIS PRODUCT</h2>

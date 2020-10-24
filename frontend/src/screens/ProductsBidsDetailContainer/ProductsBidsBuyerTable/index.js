@@ -59,7 +59,7 @@ class ProductTableItem extends PureComponent {
                                 onClick={() => this.setState({ withdraw_modal: false })}
                             />
                             <Button
-                                className='delete-modal-yes-btn'
+                                className='withdraw-modal-yes-btn'
                                 label='Yes'
                                 onClick={() => this._onDelete(data.id)}
                             />
