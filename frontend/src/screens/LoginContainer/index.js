@@ -97,7 +97,7 @@ class Login extends PureComponent {
                             BIDDING
                         </Label>
                     </div>
-                    {this.props.authentication.errMess === 'HTTP status: 400' ? (
+                    {this.props.authentication.errMess === 'HTTP status: 400' || this.props.authentication.errMess === 'HTTP status: 401' ? (
                         <FailedAlert description='Invalid Credentials!' />
                     ) : (
                         null

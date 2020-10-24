@@ -166,3 +166,14 @@
     width: 200px;
 }
 
+.winer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.winner-label {
+    color: black;
+    font-size: 35px;
+}
+
