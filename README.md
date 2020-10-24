@@ -53,24 +53,24 @@ Finally after running `python manage.py migrat`, type `python manage.py runserve
 ## Screen Shots of the UI
 
 ### Login Page
-![Login Page](/screenshots/login-page.png)
-![Signup Form](/screenshots/login-page-signup.png)
+![Login Page](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/login-page.PNG)
+![Signup Form](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/login-page-signup.PNG)
 
 ### User Info Page (Seller)
-![User Info](/screenshots/seller-user-info.png)
+![User Info](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/seller-user-info.PNG)
 
 ### User Info Page (Buyer)
-![User Info](/screenshots/buyer-user-info.png)
+![User Info](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/buyer-user-info.PNG)
 
 ### Product Bid Page
-![Product Bid](/screenshots/product-bid.png)
-![Product Bid Detailed](/screenshots/product-bid-detailed.png)
+![Product Bid](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/product-bid.PNG)
+![Product Bid Detailed](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/product-bid-detailed.PNG)
 
 ### My Product Page
-![My Product](/screenshots/seller-my-products.png)
+![My Product](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/seller-my-products.PNG)
 
 ### My Bid Page
-![My Bid](/screenshots/buyer-my-bid.png)
+![My Bid](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/buyer-my-bid.PNG)
 
 # Documentation (Backend)
 
