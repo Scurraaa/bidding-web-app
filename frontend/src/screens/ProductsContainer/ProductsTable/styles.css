@@ -1,0 +1,161 @@
+.product-table__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 15px 0;
+    border-bottom: 3px solid #A0A0A0
+}
+
+.product-table__item .item__name {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-table__item .item__description {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 2;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-table__item .item__status {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 3;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-table__item .item__expiry-date {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 4;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-table__item .item__actions {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 5;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-table__item:last-child {
+    border-bottom: none;
+}
+
+
+.delete-confirm-modal {
+    padding: 15px;
+}
+
+.delete-confirm-modal__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px
+}
+
+.delete-confirm-modal-label {
+    color: black;
+    font-size: 20px;
+}
+
+.delete-confirm-modal__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete-modal-no-btn {
+    margin-left: 35px;
+    width: 180px;
+    background-color: #A0A0A0;
+}
+
+.delete-modal-no-btn:hover {
+    background-color: #969090;
+}
+
+.delete-modal-yes-btn {
+    margin-right: 35px;
+    width: 180px;
+}
+
+.edit-product-modal {
+    padding: 20px;
+    width: 700px;
+}
+
+.edit-product-modal__header {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-product-modal__header-title {
+    font-size: 30px;
+}
+
+.edit-product-modal__body-inline-1, .edit-product-modal__body-inline-2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-product-modal__body-inline-1-name, .edit-product-modal__body-inline-1-expiry-date {
+    width: 340px;
+}
+
+.edit-product-modal__body-inline-2-minimum-bid, .edit-product-modal__body-inline-2-maximum-bid {
+    width: 340px;
+}
+
+.edit-product-modal__footer {
+    display:flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.edit-product-cancel-btn {
+    margin-left: 60px;
+    width: 210px;
+    background-color: #A0A0A0;
+}
+
+.edit-product-cancel-btn:hover {
+    background-color: #919191
+}
+
+.edit-product-save-btn {
+    margin-right: 60px;
+    width: 210px;
+}
+
+.file-upload-container {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-modal-upload-image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.file-preview {
+    width: 600px;
+    height: 450px;
+}
+
+
+
+

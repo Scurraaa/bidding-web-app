@@ -1,0 +1,111 @@
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+
+.login-container__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 400px;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 0;
+    background-color: #ffffff
+}
+
+.login-form-title {
+    font-size: 35px;
+}
+
+.login-container__form-header {
+    margin: 10px;
+}
+
+
+.login-container__form-body {
+    width: 100%
+}
+
+.username-text-input {
+    width: 100%
+}
+
+.password-text-input {
+    width: 100%
+}
+
+.login-container__form-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-btn {
+    color: #07abcc;
+    background-color: transparent;
+    border-color: transparent;
+    width: 60%
+}
+
+.signup-btn:hover {
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.signup-btn:focus {
+    outline: none
+}
+
+.login-btn {
+    width: 100%;
+}
+
+.signup-form-modal {
+    padding: 20px;
+}
+
+.signup-username-label, .signup-password-label, .signup-user-type-label {
+    color: black
+}
+
+.signup-form__header {
+    display: flex;
+    justify-content: center;
+}
+
+.signup-form__header-title {
+    font-size: 25px
+}
+
+.signup-user-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+}
+
+.signup-form__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-cancel-btn {
+    margin-left: 25px;
+    width: 210px;
+    background-color: #A0A0A0;
+}
+
+.form-cancel-btn:hover {
+    background-color: #919191
+}
+
+.form-save-btn {
+    margin-right: 25px;
+    width: 210px;
+}

@@ -1,0 +1,19 @@
+.btn-table {
+    height: 48px;
+    color: #07abcc;
+    font-size: 18px;
+    background-color: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0 1px;
+    border-color: transparent;
+    letter-spacing: 0.2;
+}
+
+.btn-table:hover {
+    text-decoration: underline;
+}
+
+.btn-table:focus {
+    outline: none;
+}

@@ -1,0 +1,168 @@
+.top-section-product-details {
+    display: flex;
+}
+
+.place-bid-btn {
+    margin-block-start: 0.47em;
+    margin-block-end: 0.47em;
+    margin-left: auto;
+    width: 180px;
+}
+
+.main-section-product-detail {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0px;
+    min-width: 580px;
+    margin-bottom: 25px
+}
+
+.main-section-product-details-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.main-section-product-details-inline-1, .main-section-product-details-inline-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-section-product-details-inline-1-minimum-bid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 150px;
+}
+
+.main-section-product-details-inline-1-maximum-bid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 150px;
+}
+
+.minimum-bid-label, .minimum-bid-value, .maximum-bid-label, .maximum-bid-value {
+    font-size: 24px;
+    color: black
+}
+
+.main-section-product-details-inline-2-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 120px;
+}
+
+.main-section-product-details-inline-2-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-status-label, .product-expiry-date-label, .product-expiry-date-value {
+    color: black;
+    font-size: 24px;
+}
+
+.product-status-open {
+    background-color: green;
+    border-radius: 50px;
+    padding: 10px;
+    width: 120px;
+    text-align: center;
+    color: #ffffff
+}
+
+.product-status-closed {
+    background-color: red;
+    border-radius: 50px;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    color: #ffffff
+}
+
+.table-section-buyer-bids {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0px;
+    min-width: 580px;
+}
+
+.table-section-buyer-bids__header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 20px;
+    padding: 15px 0;
+    border-bottom: 6px solid #A0A0A0
+}
+
+.table-section-total-bids__header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 20px;
+    padding: 15px 0;
+    border-bottom: 6px solid #A0A0A0
+}
+
+.table-section-buyer-bids__header
+.table-section-buyer-bids__header-amount,
+.table-section-buyer-bids__header-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-section-total-bids__header .table-section-buyer-bids__header-name,
+.table-section-buyer-bids__header-amount,
+.table-section-buyer-bids__header-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bid-modal {
+    padding: 20px
+}
+
+.bid-modal__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bid-modal-title {
+    color: black;
+    font-size: 24px;
+}
+
+.bid-modal__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bid-cancel-btn {
+    margin-left: 35px;
+    background-color: #a0a0a0;
+    width: 200px;
+}
+
+.bid-cancel-btn:hover {
+    background-color: #929191;
+}
+
+.product-details-image {
+    width: 600px;
+    height: 230px;
+}
+
+.bid-save-btn{
+    margin-right: 35px;
+    width: 200px;
+}
+

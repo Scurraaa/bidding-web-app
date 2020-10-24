@@ -1,0 +1,19 @@
+.navbar-container {
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    color: #fff;
+    z-index: 2;
+    background-color: #ffffff;
+    height: 90px;
+    padding: 5px 0;
+    border-bottom: 5px solid #343434;
+}
+
+.navbar-title {
+    font-size: 45px;
+}

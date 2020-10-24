@@ -1,0 +1,41 @@
+.password-input__value {
+    border: none;
+    background-color: transparent;
+    padding: 15px 20px;
+    width: 100%;
+    font-size: 20px;
+}
+.password-input{
+    display: flex;
+    border-radius: 10px;
+    border: 1px solid #DDDFE2;
+    background-color: #F2F2F2;
+    margin-bottom: 10px;
+}
+
+.password-input-error {
+    border-width: 3px;
+    border-color: red;
+}
+
+
+.password-input__value:focus {
+    outline: none;
+}
+
+.password__show-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.password__show-container:hover{
+    cursor: pointer;
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}

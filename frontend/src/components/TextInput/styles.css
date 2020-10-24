@@ -1,0 +1,25 @@
+.text-input {
+    display: flex;
+    border-radius: 10px;
+    border: 1px solid #DDDFE2;
+    background-color: #F2F2F2;
+    margin-bottom: 10px;
+}
+
+.text-input__value {
+    border: none;
+    background-color: transparent;
+    padding: 15px 20px;
+    width: 100%;
+    font-size: 20px;
+}
+
+.text-input__value:focus {
+    background-color: #ecf4f3;
+    border-radius: 15px;
+}
+
+.text-input-error {
+    border-width: 3px;
+    border-color:red;
+}

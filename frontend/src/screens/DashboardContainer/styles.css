@@ -1,0 +1,15 @@
+ .dashboard .dashboard__content {
+    padding: 0 30px;
+    margin-top: calc(70px + calc(30px * 2));
+    margin-left: calc(220px + calc(35px * 2));
+}
+
+.dashboard .dashboard__content .content-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: black;
+    margin-block-start: 0.47em;
+    margin-block-end: 0.47em;
+}
+
+

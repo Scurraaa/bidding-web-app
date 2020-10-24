@@ -1,0 +1,91 @@
+.product-seller-table__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 15px 0;
+    border-bottom: 3px solid #A0A0A0
+}
+
+.product-seller-table__item .item__name {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-seller-table__item .item__amount {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 2;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-seller-table__item .item__actions {
+    display: flex;
+    text-align: center;
+    word-break: break-all;
+    grid-column: 3;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-seller-table__item:last-child {
+    border-bottom: none;
+}
+
+
+.select-confirm-modal {
+    padding: 15px;
+}
+
+.select-confirm-modal__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px
+}
+
+.select-confirm-modal-label {
+    color: black;
+    font-size: 20px;
+}
+
+.select-confirm-modal__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.select-modal-no-btn {
+    margin-left: 35px;
+    width: 180px;
+    background-color: #A0A0A0;
+}
+
+.select-modal-no-btn:hover {
+    background-color: #969090;
+}
+
+.select-modal-yes-btn {
+    margin-right: 35px;
+    width: 180px;
+}
+
+.product-table-not-found-data {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.product-table-not-found-data .product-table-not-found-label {
+    color: #07abcc;
+    font-size: 35px;
+}
+
+
+
+
