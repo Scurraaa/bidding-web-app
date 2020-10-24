@@ -31,3 +31,75 @@ Once created, install the packages using the command `pipenv install`
 Once the installation of packages is done. Type `pipenv shell` to load the virtual enviroment file, then type `python manage.py migrate` to migrate models into a local database
 
 Finally after running `python manage.py migrat`, type `python manage.py runserver` to run the project.
+
+# Documentation (FRONTEND)
+
+### Libraries used:
+#### For State Management:
+- redux
+- react-redux
+- react-thunk
+- redux-persists
+
+#### For Routing:
+- react-router-dom
+
+#### For Components:
+- react-icons
+- react-select
+- react-datetime
+- react-modal
+
+## Screen Shots of the UI
+
+### Login Page
+![Login Page](/screenshots/login-page.png)
+![Signup Form](/screenshots/login-page-signup.png)
+
+### User Info Page (Seller)
+![User Info](/screenshots/seller-user-info.png)
+
+### User Info Page (Buyer)
+![User Info](/screenshots/buyer-user-info.png)
+
+### Product Bid Page
+![Product Bid](/screenshots/product-bid.png)
+![Product Bid Detailed](/screenshots/product-bid-detailed.png)
+
+### My Product Page
+![My Product](/screenshots/seller-my-products.png)
+
+### My Bid Page
+![My Bid](/screenshots/buyer-my-bid.png)
+
+# Documentation (Backend)
+
+## Libaries Used:
+ 
+- django
+- djangorestframework
+- psycopg2
+- django-googledrive-storage
+
+## Available Links
+### Links for Authentication
+Method allowed `POST`
+
+- `/api/login`
+- `/api/logout`
+- `/api/signup`
+- `/api/update`
+
+### Links for Products 
+Methods allowed are `POST`, `GET`, `PATCH`, `DELETE`
+
+- `/api/products/`
+- `/api/products/:id/`
+- `/api/products/bids/?product=['product_id']&buyer_id=['buyer_id']`
+- `/api/products/select/?product=['prduct_id']`
+
+### Links for Bids
+Methods allowed are `POST`, `GET`, `DELETE`
+
+- `/api/bids/`
+- `/api/bids/:id/`
