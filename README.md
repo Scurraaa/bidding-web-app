@@ -53,24 +53,24 @@ Finally after running `python manage.py migrat`, type `python manage.py runserve
 ## Screen Shots of the UI
 
 ### Login Page
-![Login Page](screenshots/login-page.png)
-![Signup Form](screenshots/login-page-signup.png)
+![Login Page](/screenshots/login-page.png)
+![Signup Form](/screenshots/login-page-signup.png)
 
 ### User Info Page (Seller)
-![User Info](screenshots/seller-user-info.png)
+![User Info](/screenshots/seller-user-info.png)
 
 ### User Info Page (Buyer)
-![User Info](screenshots/buyer-user-info.png)
+![User Info](/screenshots/buyer-user-info.png)
 
 ### Product Bid Page
-![Product Bid](screenshots/product-bid.png)
-![Product Bid Detailed](screenshots/product-bid-detailed.png)
+![Product Bid](/screenshots/product-bid.png)
+![Product Bid Detailed](/screenshots/product-bid-detailed.png)
 
 ### My Product Page
-![My Product](screenshots/seller-my-products.png)
+![My Product](/screenshots/seller-my-products.png)
 
 ### My Bid Page
-![My Bid](screenshots/buyer-my-bid.png)
+![My Bid](/screenshots/buyer-my-bid.png)
 
 # Documentation (Backend)
 
