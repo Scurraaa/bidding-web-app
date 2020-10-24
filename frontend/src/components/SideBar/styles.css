@@ -110,9 +110,4 @@
 .logout-modal-yes-btn {
     margin-right: 35px;
     width: 180px;
-    background-color: #343434
-}
-
-.logout-modal-yes-btn:hover {
-    background-color: #2b2a2a;
 }

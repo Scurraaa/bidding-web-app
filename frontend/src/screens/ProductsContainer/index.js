@@ -5,9 +5,38 @@ import Dropdown from '../../components/DropDown'
 import ProductTableItem from './ProductsTable'
 import Modal from '../../components/Modal'
 import TextInput from '../../components/TextInput'
+import PageLoading from '../../components/PageLoading'
+import Disconnected from '../../components/Disconnected'
+import NumberInput from '../../components/NumerInput'
+import Datetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
 import FileUpload from '../../components/FileUpload'
-import { PRODUCT_STATUS_CHOICES, SAMPLE_PRODUCT_TABLE_ITEM } from '../../utils/constant'
+import SuccessAlert from '../../components/Alerts/SuccessAlert'
+import FailedAlert from '../../components/Alerts/FailedAlerts'
+import { connect } from 'react-redux'
+import { getProducts, postProduct } from '../../redux/actions/ProductActions'
+import { PRODUCT_STATUS_CHOICES } from '../../utils/constant'
 import './styles.css'
+import moment from 'moment'
+
+const yesterday = moment().subtract(1, 'day');
+const disablePastDt = current => {
+  return current.isAfter(yesterday);
+};
+ 
+
+const mapStateToProps = state => {
+    return {
+        token: state.authentication.credentials.token,
+        user_id: state.authentication.credentials.id,
+        products: state.products
+    }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    getProducts: (user_id, product_status, token) => { dispatch(getProducts(user_id, product_status, token)) },
+    postProduct: (data, props, token) => { dispatch(postProduct(data, props, token)) }
+})
 
 class Products extends PureComponent {
 
@@ -26,10 +55,25 @@ class Products extends PureComponent {
         }
     }
 
-    onChangeValue = (name, value) => {
+    componentDidMount() {
+        this.props.getProducts(this.props.user_id, null, this.props.token)
+    }
+
+    onChangeValue = (value, name) => {
         this.setState({
-            ...this.state.form,
-            [name]: value
+            form: {
+                ...this.state.form,
+                [name]: value
+            }
+        })
+    }
+
+    onChangeDateTime = (date) => {
+        this.setState({
+            form: {
+                ...this.state.form,
+                expiry_date: date
+            }
         })
     }
 
@@ -39,14 +83,16 @@ class Products extends PureComponent {
         }
     }
 
-    onChangeNumberValue = (name, value) => {
+    onChangeNumberValue = (value, name) => {
         this.setState({
-            ...this.state.form,
-            [name]: parseInt(value) || 0
+            form: {
+                ...this.state.form,
+                [name]: parseInt(value) || 0
+            }
         })
     }
 
-    onChangeValueSelect = (name, value) => {
+    onChangeValueSelect = (value, name) => {
         this.setState({
             [name]: value.value
         })
@@ -59,10 +105,46 @@ class Products extends PureComponent {
         />
     )
 
+    _onSearch = () => {
+        this.props.getProducts(this.props.user_id, this.state.product_status, this.props.token)
+    }
+    
+    _onAddProduct = () => {
+        const date_format = 'YYYY-MM-DD HH:mm:ss'
+        const newDatetime = moment(this.state.form.expiry_date).format(date_format)
+        const newForm = {
+            user: this.props.user_id,
+            name: this.state.form.name,
+            description: this.state.form.description,
+            minimum_bid: this.state.form.minimum_bid,
+            maximum_bid: this.state.form.maximum_bid,
+            expiry_date: newDatetime,
+            image: this.state.raw
+        }
+        this.props.postProduct(
+            {
+            ...newForm
+            },
+            this.props.history,
+            this.props.token
+        )
+    }
+
     render() {
         const { form } = this.state
-        return (
+        return this.props.products.isLoading ? (
+            <PageLoading/>
+        ) :this.props.products.errMess === 'HTTP status: 500' ? (
+            <Disconnected />
+        ) : (
             <div className='products-container'>
+                {this.props.products.succMess === 'HTTP DELETE status: 204' ? (
+                    <SuccessAlert description='Delete has been Successful!'/>
+                ) :this.props.products.succMess === 'HTTP PATCH status: 200' ? (
+                    <SuccessAlert description='Changes has been Saved!'/>
+                ) : (
+                    null
+                )}
                 <div className='top-section-products'>
                     <h2 className='content-title'>MY PRODUCTS</h2>
                     <Button
@@ -85,7 +167,7 @@ class Products extends PureComponent {
                         <Button
                             className='search-btn'
                             label='Go'
-                            onClick={() => console.log('hello')}                    
+                            onClick={this._onSearch}                    
                         />
                 </div>
                 <div className='table-section-products'>
@@ -107,11 +189,11 @@ class Products extends PureComponent {
                         </div>
                     </div >
                     <div className='table-section-products__body'>
-                        {SAMPLE_PRODUCT_TABLE_ITEM.length > 0 ? (
-                            SAMPLE_PRODUCT_TABLE_ITEM.map(this._renderProductTableItem)
+                        {this.props.products.products.count > 0 ? (
+                            this.props.products.products.results.map(this._renderProductTableItem)
                         ) : (
-                        <div className='bid-table-not-found-data'> 
-                            <h2 className='bid-table-not-found-label'> No Data Found </h2>
+                        <div className='product-table-not-found-data'> 
+                            <h2 className='product-table-not-found-label'> No Data Found </h2>
                         </div>
                         )}
                     </div>
@@ -120,6 +202,13 @@ class Products extends PureComponent {
                             <div className='add-product-modal__header'>
                                 <Label className='add-product-modal__header-title'>ADD PRODUCT</Label>
                             </div>
+                            {this.props.products.succMess === 'HTTP POST status: 201' ? (
+                                <SuccessAlert description='Successfully added a new Product!'/>
+                            ) :this.props.products.errMess === 'HTTP POST status: 400' ? (
+                                <FailedAlert description='Product already exists'/>
+                            ) : (  
+                                null
+                            )}
                             <div className='add-product-modal__body'>
                                 <div className='add-product-modal__body-inline-1'>
                                     <div className='add-product-modal__body-inline-1-name'>
@@ -134,32 +223,35 @@ class Products extends PureComponent {
                                     </div>
                                     <div className='add-product-modal__body-inline-1-expiry-date'>
                                         <Label className='product-expiry-date'>Expiry Date</Label>
-                                        <TextInput 
-                                            className='product-expiry-date-input'
-                                            placeholder='Please Input the Expiry Date Here'
-                                            onChange={this.onChangeValue}
+                                        <Datetime
                                             value={form.expiry_date}
-                                            name='expiry_date'
+                                            onChange={this.onChangeDateTime}
+                                            closeOnSelect={true}
+                                            className='expiry-date-datetime'
+                                            inputProps={{
+                                                placeholder: 'Select Date Time'
+                                            }}
+                                            isValidDate={disablePastDt}
                                         />
                                     </div>
                                 </div>
                                 <div className='add-product-modal__body-inline-2'>
                                     <div className='add-product-modal__body-inline-2-minimum-bid'>
                                         <Label className='product-minimum-bid'>Minimum Bid</Label>
-                                        <TextInput 
+                                        <NumberInput 
                                             className='product-minimum-bid-input'
                                             placeholder='Please Input the Minimum Bid Here'
-                                            onChange={this.onChangeValue}
+                                            onChange={this.onChangeNumberValue}
                                             value={form.minimum_bid}
                                             name='minimum_bid'
                                         />
                                     </div>
                                     <div className='add-product-modal__body-inline-2-maximum-bid'>
                                         <Label className='product-maximum-bid'>Maximum Bid</Label>
-                                        <TextInput 
+                                        <NumberInput 
                                             className='product-maximum-bid-input'
-                                            placeholder='Please Input the maximum-bid Here'
-                                            onChange={this.onChangeValue}
+                                            placeholder='Please Input the Maximum bid Here'
+                                            onChange={this.onChangeNumberValue}
                                             value={form.maximum_bid}
                                             name='maximum_bid'
                                         />
@@ -198,7 +290,7 @@ class Products extends PureComponent {
                                 <Button
                                     className='add-product-save-btn'
                                     label='Save'
-                                    onClick={() => this.setState({form_modal: false})}
+                                    onClick={this._onAddProduct}
                                 />
                             </div>
                         </div>
@@ -209,4 +301,4 @@ class Products extends PureComponent {
     }
 }
 
-export default Products
+export default connect(mapStateToProps, mapDispatchToProps)(Products)

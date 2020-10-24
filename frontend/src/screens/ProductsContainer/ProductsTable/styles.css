@@ -146,7 +146,7 @@
     justify-content: center;
 }
 
-.add-modal-upload-image-container {
+.edit-modal-upload-image-container {
     display: flex;
     justify-content: center;
 }
@@ -155,6 +155,7 @@
     width: 600px;
     height: 450px;
 }
+
 
 
 

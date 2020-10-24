@@ -3,13 +3,35 @@ import Label from '../../components/Label'
 import Dropdown from '../../components/DropDown'
 import Button from '../../components/Button'
 import BidTableItem from './BidsTable/BidsTableItem'
-import { SAMPLE_BID_TABLE_ITEM, BID_STATUS_CHOICES } from '../../utils/constant'
+import PageLoading from '../../components/PageLoading'
+import Disconnected from '../../components/Disconnected'
+import { connect } from 'react-redux'
+import { getBids } from '../../redux/actions/BidActions'
+import { BID_STATUS_CHOICES } from '../../utils/constant'
 import './styles.css'
 
-class BidContainer extends PureComponent {
+const mapStateToProps = state => {
+    return {
+        token: state.authentication.credentials.token,
+        user_id: state.authentication.credentials.id,
+        bids: state.bids
+    }
+}
 
-    state = {
-        bid_status: ''
+const mapDispatchToProps = (dispatch) => ({
+    getBids: (user_id, bid_status, token) => { dispatch(getBids(user_id, bid_status, token)) }
+})
+
+class BidContainer extends PureComponent {
+    constructor(props) {
+        super(props)
+        this.state = {
+            bid_status: ''
+        }
+    }
+
+    componentDidMount() {
+        this.props.getBids(this.props.user_id, null, this.props.token)
     }
 
     _renderBidTableItem = (data, index) => (
@@ -19,14 +41,26 @@ class BidContainer extends PureComponent {
         />
     )
 
-    onChangeValueSelect = (name, value) => {
+    onChangeValueSelect = (value, name) => {
         this.setState({
             [name]: value.value
         })
     }
 
+    _onSearch = () => {
+        if(this.state.bid_status === 'ALL') {
+            this.props.getBids(this.props.user_id, null, this.props.token)
+        } else {
+            this.props.getBids(this.props.user_id, this.state.bid_status, this.props.token)
+        }
+    }
+
     render() {
-        return (
+        return this.props.bids.isLoading ? (
+            <PageLoading/>
+        ) :this.props.bids.errMess === 'HTTP status: 500' ? (
+            <Disconnected/>
+        ) : (
             <div className='bid-container'>
                 <div className='top-section-bid'>
                     <h2 className='content-title'>MY BIDS</h2>
@@ -45,7 +79,7 @@ class BidContainer extends PureComponent {
                     <Button
                         className='search-btn'
                         label='Go'
-                        onClick={() => console.log('hello')}                    
+                        onClick={this._onSearch}                    
                     />
                 </div>
                 <div className='table-section-bid'>
@@ -61,8 +95,8 @@ class BidContainer extends PureComponent {
                         </div>
                     </div>
                     <div className='table-section-bid__body'>
-                        {SAMPLE_BID_TABLE_ITEM.length > 0 ? (
-                            SAMPLE_BID_TABLE_ITEM.map(this._renderBidTableItem)
+                        {this.props.bids.bids.count > 0 ? (
+                            this.props.bids.bids.results.map(this._renderBidTableItem)
                         ) : (
                         <div className='bid-table-not-found-data'> 
                             <h2 className='bid-table-not-found-label'> No Data Found </h2>
@@ -75,4 +109,4 @@ class BidContainer extends PureComponent {
     }
 }
 
-export default BidContainer
+export default connect(mapStateToProps, mapDispatchToProps)(BidContainer)

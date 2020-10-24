@@ -1,52 +1,73 @@
 import React, { PureComponent } from 'react'
 import Label from '../../components/Label'
+import { connect } from 'react-redux'
+import { updateCredentials } from '../../redux/actions/AuthActions'
+import PageLoading from '../../components/PageLoading'
 import './styles.css'
+
+const mapStateToProps = state => ({
+    credentials: state.authentication.credentials,
+    authentication: state.authentication
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    updateCredentials: (data) => { dispatch(updateCredentials(data)) }
+})
+
 
 class UserInfo extends PureComponent {
 
-    state = {
-        user_type: 'buyer'
+    componentDidMount() {
+        this.props.updateCredentials(
+            {
+                'username': this.props.credentials.username,
+                'password': this.props.credentials.password
+            }
+        )
     }
 
     render() {
-        return this.state.user_type === 'buyeasdr' || false ? (
-            <div className='user-info-container'>
-                <div className='top-section-user-info'>
-                    <h2 className='content-title'> USER INFO </h2>
-                </div>
-                <div className='main-section-user-info'>
-                    <div className='main-section-user-info__inline-1'>
-                        <Label className='user-info'>Name: John Doe</Label>
-                        <Label className='user-info'>Bid Credits Remaining: 45000</Label>
-                        <Label className='user-info'>Commited Bids: 5000</Label>
+        return this.props.authentication.isLoading ? (
+            <PageLoading/>
+        ) : ( this.props.credentials.user_type === 'buyer' ? (
+                <div className='user-info-container'>
+                    <div className='top-section-user-info'>
+                        <h2 className='content-title'> USER INFO </h2>
                     </div>
-                    <div className='main-section-user-info__inline-2'>
-                        <Label className='user-info'>Total Bids Spent: 4500</Label>
-                        <Label className='user-info'>Total Bids Placed: 25</Label>
-                        <Label className='user-info'>Total Winning Bids: 10</Label>
-                    </div>
-                </div>
-            </div>
-        ) : (
-            <div className='user-info-container'>
-                <div className='top-section-user-info'>
-                    <h2 className='content-title'> USER INFO </h2>
-                </div>
-                <div className='main-section-user-info'>
-                    <div className='main-section-user-info__inline-1'>
-                        <Label className='user-info'>Name: John Doe</Label>
-                        <Label className='user-info'>Product Bids: 25</Label>
-                        <Label className='user-info'>Ongoing Product: 10</Label>
-                    </div>
-                    <div className='main-section-user-info__inline-2'>
-                        <Label className='user-info'>Closed Product: 15</Label>
-                        <Label className='user-info'>Total Earnings: 25000</Label>
-                        <Label className='user-info'>Potential Earnings: 10000</Label>
+                    <div className='main-section-user-info'>
+                        <div className='main-section-user-info__inline-1'>
+                            <Label className='user-info'>Name: {this.props.credentials.username}</Label>
+                            <Label className='user-info'>Bid Credits Remaining: {this.props.credentials.bid_credits} PHP </Label>
+                            <Label className='user-info'>Commited Bids: {this.props.credentials.commited_bids}</Label>
+                        </div>
+                        <div className='main-section-user-info__inline-2'>
+                            <Label className='user-info'>Total Bids Spent: {this.props.credentials.total_spent} PHP</Label>
+                            <Label className='user-info'>Total Bids Placed: {this.props.credentials.total_bids}</Label>
+                            <Label className='user-info'>Total Winning Bids: {this.props.credentials.winning_bids}</Label>
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <div className='user-info-container'>
+                    <div className='top-section-user-info'>
+                        <h2 className='content-title'> USER INFO </h2>
+                    </div>
+                    <div className='main-section-user-info'>
+                        <div className='main-section-user-info__inline-1'>
+                            <Label className='user-info'>Name: {this.props.credentials.username}</Label>
+                            <Label className='user-info'>Product Bids: {this.props.credentials.products}</Label>
+                            <Label className='user-info'>Ongoing Product: {this.props.credentials.ongoing_products}</Label>
+                        </div>
+                        <div className='main-section-user-info__inline-2'>
+                            <Label className='user-info'>Closed Product: {this.props.credentials.done_products}</Label>
+                            <Label className='user-info'>Total Earnings: {this.props.credentials.earnings} PHP</Label>
+                            <Label className='user-info'>Potential Earnings: {this.props.credentials.potential_earnings} PHP</Label>
+                        </div>
+                    </div>
+                </div>
+            )
         )
     }
 }
 
-export default UserInfo
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo)

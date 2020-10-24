@@ -4,8 +4,15 @@ import Modal from '../Modal'
 import Label from '../Label'
 import Navlink from './NavLink'
 import { withRouter } from 'react-router-dom'
-import {NAVIGATION_LINKS} from '../../utils/constant'
+import {NAVIGATION_LINKS_SELLER, NAVIGATION_LINKS_BUYER} from '../../utils/constant'
+import { connect } from 'react-redux'
 import './styles.css'
+
+const mapStateToProps = state => {
+    return {
+        credentials: state.authentication.credentials
+    }
+}
 
 class SideBar extends PureComponent {
     state = {
@@ -14,6 +21,16 @@ class SideBar extends PureComponent {
 
     onNavigate = route => {
         this.props.history.push(`${route}`)
+    }
+
+    _onLogout = () => {
+        this.props.postLogout(
+            {
+                username: this.props.credentials.username,
+                password: this.props.credentials.password
+            },
+            this.props.history
+        )
     }
 
     _renderNavigationItems = (item, index) => {
@@ -37,7 +54,11 @@ class SideBar extends PureComponent {
         <>
             <div className='sidebar-show'>
                 <ul className='sidebar__navigation-items'>
-                    {NAVIGATION_LINKS.map(this._renderNavigationItems)}
+                    {this.props.authentication.credentials.user_type === 'seller' ? (
+                         NAVIGATION_LINKS_SELLER.map(this._renderNavigationItems)
+                    ) : (
+                        NAVIGATION_LINKS_BUYER.map(this._renderNavigationItems)
+                    )}
                 </ul>
                 <div className='sidebar-show__logout-btn'>
                     <Button onClick={() => this.setState({logout_modal: true})} label="LOGOUT" className="sidebar__logout-btn"/>
@@ -58,7 +79,7 @@ class SideBar extends PureComponent {
                         <Button
                             className='logout-modal-yes-btn'
                             label='Yes'
-                            onClick={() => this.setState({ logout_modal: false})}
+                            onClick={this._onLogout}
                         />
                     </div>
                 </div>
@@ -68,4 +89,4 @@ class SideBar extends PureComponent {
     }
 }
 
-export default withRouter(SideBar)
+export default withRouter(connect(mapStateToProps)(SideBar))

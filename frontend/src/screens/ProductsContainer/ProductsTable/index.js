@@ -5,11 +5,37 @@ import Label from '../../../components/Label'
 import Button from '../../../components/Button'
 import TextInput from '../../../components/TextInput'
 import FileUpload from '../../../components/FileUpload'
+import Datetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
+import NumberInput from '../../../components/NumerInput'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { deleteProduct, editProduct } from '../../../redux/actions/ProductActions'
 import './styles.css'
+import moment from 'moment'
+
+const yesterday = moment().subtract(1, 'day');
+const disablePastDt = current => {
+  return current.isAfter(yesterday);
+};
+
+const mapStateToProps = state => {
+    return {
+        token: state.authentication.credentials.token,
+        user_id: state.authentication.credentials.id,
+        products: state.products
+    }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    deleteProduct: (product_id, props, token) => { dispatch(deleteProduct(product_id, props, token)) },
+    editProduct: (product_id, data, props, token) => { dispatch(editProduct(product_id, data, props, token))}
+})
 
 class ProductTableItem extends PureComponent {
 
     state = {
+        id: '',
         delete_modal: false,
         form_modal: false,
         preview: '',
@@ -23,10 +49,49 @@ class ProductTableItem extends PureComponent {
         }
     }
 
-    onChangeValue = (name, value) => {
+    componentDidUpdate() {
+        const oldForm = {
+            form: {
+                name: '',
+                description:'',
+                expiry_date: '',
+                minimum_bid: '',
+                maximum_bid: '',
+            }
+        }
+        let product
+        if(this.props.products.products.results.filter(element => element.id === this.state.id).length) {
+            product = this.props.products.products.results.filter(element => element.id === this.state.id)
+        }
+        if (JSON.stringify(oldForm.form) === JSON.stringify(this.state.form) && product) {
+            this.setState({
+                form: {
+                    name: product[0].name,
+                    description: product[0].description,
+                    expiry_date: product[0].expiry_date,
+                    maximum_bid: product[0].maximum_bid,
+                    minimum_bid: product[0].minimum_bid
+                },
+                preview: product[0].image,
+            })
+        }
+    }
+
+    onChangeDateTime = (date) => {
         this.setState({
-            ...this.state.form,
-            [name]: value
+            form: {
+                ...this.state.form,
+                expiry_date: date
+            }
+        })
+    }
+
+    onChangeValue = (value, name) => {
+        this.setState({
+            form: {
+                ...this.state.form,
+                [name]: value
+            }
         })
     }
 
@@ -36,16 +101,38 @@ class ProductTableItem extends PureComponent {
         }
     }
 
-    onChangeNumberValue = (name, value) => {
+    onChangeNumberValue = (value, name) => {
         this.setState({
-            ...this.state.form,
-            [name]: parseInt(value) || 0
+            form: {
+                ...this.state.form,
+                [name]: parseInt(value) || 0
+            }
         })
+    }
+
+    _onDelete = (product_id) => {
+        this.props.deleteProduct(product_id, this.props.history, this.props.token)
+        this.setState({delete_modal: false})
+    }
+
+    _onEdit = (product_id) => {
+        const date_format = 'YYYY-MM-DD HH:mm:ss'
+        const newDatetime = moment(this.state.form.expiry_date).format(date_format)
+        const newForm = {
+            name: this.state.form.name,
+            user: this.props.user_id,
+            description: this.state.form.description,
+            minimum_bid: this.state.form.minimum_bid,
+            maximum_bid: this.state.form.maximum_bid,
+            expiry_date: newDatetime,
+            image: this.state.raw
+        }
+        this.props.editProduct(product_id, {...newForm}, this.props.history, this.props.token)
     }
 
     render() {
         const { data } = this.props
-        const {form } = this.state
+        const { form } = this.state
         return (
             <div className='product-table__item'>
                 <div className='item__name'>
@@ -67,9 +154,14 @@ class ProductTableItem extends PureComponent {
                      />
 
                     <TableButton label='[ Edit Product ]'
-                        className='product-action-view-payment'
-                        onClick={() => this.setState({form_modal: true})} 
+                        className='product-action-edit'
+                        onClick={() => this.setState({id: data.id, form_modal: true})} 
                      />
+
+                     <TableButton label='[ View ]'
+                        className='product-action-view-product'
+                        onClick={() => this.props.history.push('product-details?product_id='+data.id)}
+                    />
                 </div>
 
                 <Modal modalVisibility={this.state.delete_modal} className='delete-confirm-modal'>
@@ -86,7 +178,7 @@ class ProductTableItem extends PureComponent {
                             <Button
                                 className='delete-modal-yes-btn'
                                 label='Yes'
-                                onClick={() => console.log('here')}
+                                onClick={() => this._onDelete(data.id)}
                             />
                         </div>
                     </div>
@@ -110,32 +202,35 @@ class ProductTableItem extends PureComponent {
                                 </div>
                                 <div className='edit-product-modal__body-inline-1-expiry-date'>
                                     <Label className='product-expiry-date'>Expiry Date</Label>
-                                    <TextInput 
-                                        className='product-expiry-date-input'
-                                        placeholder='Please Input the Expiry Date Here'
-                                        onChange={this.onChangeValue}
-                                        value={form.expiry_date}
-                                        name='expiry_date'
-                                    />
+                                        <Datetime
+                                            value={form.expiry_date}
+                                            onChange={this.onChangeDateTime}
+                                            closeOnSelect={true}
+                                            className='expiry-date-datetime'
+                                            inputProps={{
+                                                placeholder: 'Select Date Time'
+                                            }}
+                                            isValidDate={disablePastDt}
+                                        />
                                 </div>
                             </div>
                             <div className='edit-product-modal__body-inline-2'>
                                 <div className='edit-product-modal__body-inline-2-minimum-bid'>
                                     <Label className='product-minimum-bid'>Minimum Bid</Label>
-                                    <TextInput 
+                                    <NumberInput 
                                         className='product-minimum-bid-input'
                                         placeholder='Please Input the Minimum Bid Here'
-                                        onChange={this.onChangeValue}
+                                        onChange={this.onChangeNumberValue}
                                         value={form.minimum_bid}
                                         name='minimum_bid'
                                     />
                                 </div>
                                 <div className='edit-product-modal__body-inline-2-maximum-bid'>
                                     <Label className='product-maximum-bid'>Maximum Bid</Label>
-                                    <TextInput 
+                                    <NumberInput 
                                         className='product-maximum-bid-input'
                                         placeholder='Please Input the maximum-bid Here'
-                                        onChange={this.onChangeValue}
+                                        onChange={this.onChangeNumberValue}
                                         value={form.maximum_bid}
                                         name='maximum_bid'
                                     />
@@ -174,7 +269,7 @@ class ProductTableItem extends PureComponent {
                             <Button
                                 className='edit-product-save-btn'
                                 label='Save'
-                                onClick={() => this.setState({form_modal: false})}
+                                onClick={() => this._onEdit(data.id)}
                             />
                         </div>
                     </div>
@@ -185,4 +280,4 @@ class ProductTableItem extends PureComponent {
     }
 }
 
-export default ProductTableItem
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(ProductTableItem))

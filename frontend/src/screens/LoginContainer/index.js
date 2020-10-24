@@ -1,11 +1,28 @@
 import React, { PureComponent } from 'react'
-import Loading from '../../components/PageLoading'
 import TextInput from '../../components/TextInput'
 import PasswordInput from '../../components/PasswordInput'
 import Button from '../../components/Button'
 import Label from '../../components/Label'
 import Modal from '../../components/Modal'
+import PageLoading from '../../components/PageLoading'
+import Disconnected from '../../components/Disconnected'
+import FailedAlert from '../../components/Alerts/FailedAlerts'
+import SuccessAlert from '../../components/Alerts/SuccessAlert'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { postLogin, postSignup } from '../../redux/actions/AuthActions'
 import './styles.css'
+
+const mapStateToProps = state => {
+    return {
+        authentication: state.authentication
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    postLogin: (data, props) => { dispatch(postLogin(data, props)) },
+    postSignup: (data) => { dispatch(postSignup(data)) }
+})
 
 class Login extends PureComponent {
 
@@ -31,6 +48,32 @@ class Login extends PureComponent {
         })
     }
 
+    _onLogin = () => {
+        this.props.postLogin(
+            {
+                username: this.state.form['username'],
+                password: this.state.form['password']
+            },
+            this.props.history
+        )
+    }
+
+    _onCreateAccount = () => {
+        this.props.postSignup(
+            {
+                username: this.state.signup_form['username'],
+                password: this.state.signup_form['password'],
+                user_type: this.state.user_type
+            }
+        )
+        this.setState({
+            signup_form: {
+                username: '',
+                password: ''
+            }
+        })
+    }
+
     onChangeValueSignUpForm = (value, name) => {
         this.setState({
             signup_form: {
@@ -42,7 +85,11 @@ class Login extends PureComponent {
 
     render() {
         const { form, signup_form } = this.state
-        return (
+        return this.props.authentication.isLoading ? (
+            <PageLoading/>
+        ) :this.props.authentication.errMess === 'HTTP status: 500' ? (
+            <Disconnected />
+        ) : (
             <div className='login-container'>
                 <div className='login-container__form'>
                     <div className='login-container__form-header'>
@@ -50,6 +97,11 @@ class Login extends PureComponent {
                             BIDDING
                         </Label>
                     </div>
+                    {this.props.authentication.errMess === 'HTTP status: 400' ? (
+                        <FailedAlert description='Invalid Credentials!' />
+                    ) : (
+                        null
+                    )}
                     <div className='login-container__form-body'>
                         <TextInput
                             className='username-text-input'
@@ -70,7 +122,7 @@ class Login extends PureComponent {
                         <Button
                             className='login-btn'
                             label='LOGIN'
-                            onClick={() => console.log('hello world!')}
+                            onClick={this._onLogin}
                         />
 
                         <Button
@@ -85,6 +137,15 @@ class Login extends PureComponent {
                         <div className='signup-form__header'>
                             <Label className='signup-form__header-title'>Sign Up</Label>
                         </div>
+                        {this.props.authentication.succMess === 'HTTP POST status: 200' ? (
+                            <SuccessAlert description='Successfully added a new Account!' />
+                        ) :this.props.authentication.errMess === 'HTTP POST status: 400' ? (
+                            <FailedAlert description='Account Already Exists!' />
+                        ) :this.props.authentication.errMess === 'HTTP POST status: 401' ? (
+                            <FailedAlert description='Invalid Credentials'/>
+                        ) : (
+                            null
+                        )}
                         <div className='signup-form__body'>
                             <div className='signup-form__body-username'>
                                 <Label className='signup-username-label'>Username</Label>
@@ -105,9 +166,9 @@ class Login extends PureComponent {
                                 />
                                 <Label className='signup-user-type-label'>User Type: </Label>
                                 <div className='signup-user-type'>
-                                    <input type='radio' value='Buyer' name='user_type' onChange={(e) => this.setState({user_type: e.target.value})} />
+                                    <input type='radio' value='buyer' name='user_type' onChange={(e) => this.setState({user_type: e.target.value})} />
                                     <Label className='buyer-label'>Buyer</Label>
-                                    <input type='radio' value='Seller' name='user_type' onChange={(e) => this.setState({user_type: e.target.value})} />
+                                    <input type='radio' value='seller' name='user_type' onChange={(e) => this.setState({user_type: e.target.value})} />
                                     <Label className='seller-label'>Seller</Label>
                                 </div>
                                 <div className='signup-form__footer'>
@@ -119,7 +180,7 @@ class Login extends PureComponent {
                                     <Button
                                         className='form-save-btn'
                                         label='Save'
-                                        onClick={() => console.log(this.state)}
+                                        onClick={this._onCreateAccount}
                                     />
                                 </div>
                             </div>
@@ -131,4 +192,4 @@ class Login extends PureComponent {
     }
 }
 
-export default Login
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))

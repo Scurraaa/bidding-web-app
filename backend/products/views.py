@@ -9,6 +9,8 @@ from django.http import Http404
 from products.serializers import ProductSerializers
 from bids.serializers import BidSerializers
 from rest_framework.decorators import action
+from django.utils import timezone
+
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
@@ -49,7 +51,12 @@ class ProductViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'], name='Get Bids')
     def bids(self, request, *args, **kwargs):
         product = self.request.GET.get('product', None)
-        bids = Bid.objects.filter(product=product)
+        buyer_id = self.request.GET.get('buyer_id', None)
+        print(buyer_id)
+        if buyer_id:
+            bids = Bid.objects.filter(product=product, buyer=buyer_id)
+        else:
+            bids = Bid.objects.filter(product=product)
         page = self.paginate_queryset(bids)
         if page is not None:
             serializer = BidSerializers(page, many=True)
@@ -58,8 +65,19 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
+        instance = Product.objects.all()
+        for instance in instance:
+            if timezone.now() > instance.expiry_date:
+                instance.status = 'CLOSED'
+            instance.save()
+        seller_id = self.request.GET.get('seller', None)
+        product_status = self.request.GET.get('status', None)
+        if seller_id:
+            queryset = Product.objects.filter(user=seller_id)
+        if product_status:
+            queryset = Product.objects.filter(user=seller_id, status=product_status)
+        if seller_id is None and product_status is None:
+            queryset = Product.objects.filter(status='OPEN')
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = ProductSerializers(page, many=True)
@@ -104,3 +122,4 @@ class ProductViewSet(viewsets.ModelViewSet):
             return Response(data, status=status.HTTP_204_NO_CONTENT)
         except Http404:
             return Response(status=status.HTTP_404_NOT_FOUND)
+

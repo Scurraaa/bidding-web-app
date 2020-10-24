@@ -15,7 +15,12 @@ class BidViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'delete']
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+        buyer_id = self.request.GET.get('buyer', None)
+        bid_status = self.request.GET.get('status', None)
+        if bid_status:
+            queryset=Bid.objects.filter(buyer=buyer_id, status=bid_status)
+        else:
+            queryset=Bid.objects.filter(buyer=buyer_id)
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = BidSerializers(page, many=True)
@@ -55,7 +60,6 @@ class BidViewSet(viewsets.ModelViewSet):
             instance = self.get_object()
             user = User.objects.get(username=instance.buyer)
             buyer = Buyer.objects.get(user=user)
-            print(instance.amount)
             buyer.bid_credit += instance.amount
             buyer.commited_bids -= instance.amount
             self.perform_destroy(instance)

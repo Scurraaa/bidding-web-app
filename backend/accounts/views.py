@@ -32,11 +32,16 @@ def logging_in(request):
                         products = Product.objects.filter(user=seller)
                         min_bid_sum = sum([product.minimum_bid for product in products])
                         max_bid_sum = sum([product.maximum_bid for product in products])
-                        average = min_bid_sum + max_bid_sum / products.count()
+                        if products.count() > 0:
+                            average = min_bid_sum + max_bid_sum / products.count()
+                        else:
+                            average = 0
                         response_data = {
-                            'id': user.id,
+                            'id': seller.id,
+                            'user_type': 'seller',
                             'token': token.key,
                             'username': username,
+                            'password': password,
                             'products': Product.objects.filter(user=seller).count(),
                             'ongoing_products': Product.objects.filter(status='OPEN', user=seller).count(),
                             'done_products': Product.objects.filter(status='CLOSED', user=seller).count(),
@@ -48,9 +53,11 @@ def logging_in(request):
                     else : 
                         buyer = Buyer.objects.get(user=user)
                         response_data = {
-                            'id': user.id,
+                            'id': buyer.id,
+                            'user_type': 'buyer',
                             'token': token.key,
                             'username': username,
+                            'password': password,
                             'bid_credits': buyer.bid_credit,
                             'total_bids': Bid.objects.filter(buyer=buyer).count(),
                             'winning_bids': buyer.winning_bids,
@@ -136,4 +143,87 @@ def signing_up(request):
                     }
                     return Response(data, status=status.HTTP_200_OK)
             return Response({'detail': 'User Already Exists'},status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([AllowAny,])
+def update_credentials(request):
+    if request.method == 'POST':
+        serializer = LoginSerializers(data=request.data)
+        if not serializer.is_valid():
+            username = serializer.data['username']
+            password = serializer.data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                token, created = Token.objects.get_or_create(user=user)
+                if not created:
+                    token.created = datetime.datetime.now(datetime.timezone.utc)
+                    token.save()
+                    if user.is_superuser:
+                        seller = Seller.objects.get(user=user)
+                        products = Product.objects.filter(user=seller)
+                        min_bid_sum = sum([product.minimum_bid for product in products])
+                        max_bid_sum = sum([product.maximum_bid for product in products])
+                        if products.count() > 0:
+                            average = min_bid_sum + max_bid_sum / products.count()
+                        else:
+                            average = 0
+                        response_data = {
+                            'id': seller.id,
+                            'user_type': 'seller',
+                            'token': token.key,
+                            'username': username,
+                            'password': password,
+                            'products': Product.objects.filter(user=seller).count(),
+                            'ongoing_products': Product.objects.filter(status='OPEN', user=seller).count(),
+                            'done_products': Product.objects.filter(status='CLOSED', user=seller).count(),
+                            'earnings': seller.earnings,
+                            'potential_earnings': average,
+                            'detail': 'Successfully logged in',
+                        }
+                        return Response(response_data, status=status.HTTP_200_OK)
+                    else : 
+                        buyer = Buyer.objects.get(user=user)
+                        response_data = {
+                            'id': buyer.id,
+                            'user_type': 'buyer',
+                            'token': token.key,
+                            'username': username,
+                            'password': password,
+                            'bid_credits': buyer.bid_credit,
+                            'total_bids': Bid.objects.filter(buyer=buyer).count(),
+                            'winning_bids': buyer.winning_bids,
+                            'commited_bids': buyer.commited_bids,
+                            'total_spent': buyer.commited_bids,
+                        }
+                    return Response(response_data, status=status.HTTP_200_OK)
+            else:
+                response_data = {
+                    'id': None,
+                    'token': None,
+                    'username': None,
+                    'password': None,
+                    'superuser': None,
+                    'detail': 'Invalid login credentials',
+                }
+                return Response(response_data, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            response_data = {
+            'id': None,
+            'token': None,
+            'username': None,
+            'password': None,
+            'superuser': None,
+            'detail': 'Login credentials doesn\'t exists',
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+    response_data = {
+        'id': None,
+        'token': None,
+        'username': None,
+        'password': None,
+        'superuser': None,
+        'detail': 'Method not allowed',
+    }
+    return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 

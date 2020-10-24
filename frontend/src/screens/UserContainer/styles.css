@@ -27,7 +27,8 @@
 .user-type {
     font-size: 30px;
     margin-bottom: 20px;
-    color: black
+    color: black;
+    text-align: center
 }
 
 .user-info {

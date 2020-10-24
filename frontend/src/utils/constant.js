@@ -1,27 +1,40 @@
-export const NAVIGATION_LINKS = [
+export const NAVIGATION_LINKS_SELLER = [
     {
-        id: 1,
-        label: 'Product Bids',
+        label: 'PRODUCT BIDS',
         route: '/dashboard/products'
     },
     {
-        id: 2,
-        label: 'My Bids',
-        route: '/dashboard/my-bids',
-    },
-    {
-        id: 3,
-        label: 'My Products',
+        label: 'MY PRODUCTS',
         route: '/dashboard/my-products'
     },
     {
-        id: 4,
-        label: 'User Info',
+        label: 'USER INFO',
         route: '/dashboard/user-info'
     },
 ]
 
+export const NAVIGATION_LINKS_BUYER = [
+    {
+        label: 'PRODUCT BIDS',
+        route: '/dashboard/products'
+    },
+    {
+        label: 'MY BIDS',
+        route: '/dashboard/my-bids'
+    },
+    {
+        label: 'USER INFO',
+        route: '/dashboard/user-info'
+    },
+
+]
+
 export const BID_STATUS_CHOICES = [
+    {
+        label: 'ALL',
+        value: 'ALL'
+    },
+    
     {
         label: 'SUCCESSFUL',
         value: 'SUCCESSFUL'
@@ -85,5 +98,35 @@ export const SAMPLE_PRODUCT_TABLE_ITEM = [
         description: 'Product B is B',
         expiry_date: '2020-10-23',
         status: 'OPEN'
+    }
+]
+
+export const PRODUCT_CARD_SAMPLE = [
+    {
+        name: 'PRODUCT A',
+        description: 'PRODUCT A IS A',
+        image: require('../assets/images/loader.svg'),
+        expiry_date: '2020-10-23'
+    },
+
+    {
+        name: 'PRODUCT B',
+        description: 'PRODUCT A IS B',
+        image: require('../assets/images/loader.svg'),
+        expiry_date: '2020-10-21'
+    },
+
+    {
+        name: 'PRODUCT C',
+        description: 'PRODUCT C IS C',
+        image: require('../assets/images/loader.svg'),
+        expiry_date: '2020-10-15'
+    },
+
+    {
+        name: 'PRODUCT D',
+        description: 'PRODUCT D IS D',
+        image: require('../assets/images/loader.svg'),
+        expiry_date: '2020-10-1'
     }
 ]
