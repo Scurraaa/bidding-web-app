@@ -36,6 +36,7 @@ class ProductBidDetails extends PureComponent {
     state = {
         preview: '',
         amount: '',
+        winner: '',
         form: {
             name: '',
             description: '',
@@ -54,9 +55,8 @@ class ProductBidDetails extends PureComponent {
             this.props.getProductBids(query_param.product_id, this.props.user_id, this.props.token)
         }
     }
-
     componentDidUpdate() {
-        console.log(this.props.products.product)
+        console.log(this.props.products.product.data)
         const oldForm = {
             form: {
                 name: '',
@@ -161,33 +161,41 @@ class ProductBidDetails extends PureComponent {
                 </div>
                 {this.props.products.product.user === this.props.user_id ? (
                         <div className='product-all-bids'>
-                            <div className='all-bids'>
-                                <h2>ALL BIDS IN THIS PRODUCT</h2>
-                            </div>
-                            <div className='table-section-buyer-bids'>
-                                <div className='table-section-total-bids__header'>
-                                    <div className='table-section-buyer-bids__header-name'>
-                                        <Label className='buyer-name'>NAME</Label>
-                                    </div>
-                                    <div className='table-section-buyer-bids__header-amount'>
-                                        <Label className='buyer-amount'>AMOUNT</Label>
-                                    </div>
-                                    <div className='table-section-buyer-bids__header-action'>
-                                        <Label className='buyer-action'>ACTION</Label>
-                                    </div>
+                            {this.props.products.product.winner ? (
+                                <div className='winer-container'>
+                                    <Label className='winner-label'>This Product already have a Winner</Label>
                                 </div>
-                                <div className='table-section-buyer-bids__body'>
-                                    {this.props.products.product_bids.count > 0 ? (
-                                        this.props.products.product_bids.results.map(this._renderSellerItemTable)
-                                    ) : (
-                                    <div className='product-table-not-found-data'> 
-                                        <h2 className='product-table-not-found-label'> No Data Found </h2>
+                            ) : (
+                                <>
+                                    <div className='all-bids'>
+                                        <h2>ALL BIDS IN THIS PRODUCT</h2>
                                     </div>
-                                    )}
-                                </div>
-                            </div>
+                                    <div className='table-section-buyer-bids'>
+                                        <div className='table-section-total-bids__header'>
+                                            <div className='table-section-buyer-bids__header-name'>
+                                                <Label className='buyer-name'>NAME</Label>
+                                            </div>
+                                            <div className='table-section-buyer-bids__header-amount'>
+                                                <Label className='buyer-amount'>AMOUNT</Label>
+                                            </div>
+                                            <div className='table-section-buyer-bids__header-action'>
+                                                <Label className='buyer-action'>ACTION</Label>
+                                            </div>
+                                        </div>
+                                        <div className='table-section-buyer-bids__body'>
+                                            {this.props.products.product_bids.count > 0 ? (
+                                                this.props.products.product_bids.results.map(this._renderSellerItemTable)
+                                            ) : (
+                                            <div className='product-table-not-found-data'> 
+                                                <h2 className='product-table-not-found-label'> No Data Found </h2>
+                                            </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </div>
-                    ) : (
+                    ) :this.props.products.product.user !== this.props.user_id ? (
                         <div className='buyer-bids'>
                             <div className='buyer-bids-container'>
                                 <h2>YOUR BIDS IN THIS PRODUCT</h2>
@@ -212,7 +220,10 @@ class ProductBidDetails extends PureComponent {
                                 </div>
                             </div>
                         </div>
+                    ) : (
+                        null
                     )}
+
                 <Modal modalVisibility={this.state.bid_form} className='bid-modal'>
                     <div className='bid-modal-container'>
                         <div className='bid-modal__header'>

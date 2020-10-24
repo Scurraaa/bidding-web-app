@@ -107,6 +107,9 @@ class Products extends PureComponent {
 
     _onSearch = () => {
         this.props.getProducts(this.props.user_id, this.state.product_status, this.props.token)
+        this.setState({
+            product_status: ''
+        })
     }
     
     _onAddProduct = () => {
