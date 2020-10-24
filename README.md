@@ -53,7 +53,7 @@ Finally after running `python manage.py migrat`, type `python manage.py runserve
 ## Screen Shots of the UI
 
 ### Login Page
-![Login Page](/screenshots/login-page.png)
+![Login Page](https://github.com/Scurraaa/bidding-web-app/bloblogin-page.png)
 ![Signup Form](/screenshots/login-page-signup.png)
 
 ### User Info Page (Seller)
@@ -70,7 +70,7 @@ Finally after running `python manage.py migrat`, type `python manage.py runserve
 ![My Product](/screenshots/seller-my-products.png)
 
 ### My Bid Page
-![My Bid](/screenshots/buyer-my-bid.png)
+![My Bid](https://github.com/Scurraaa/bidding-web-app/blob/main/screenshots/buyer-my-bid.png)
 
 # Documentation (Backend)
 
